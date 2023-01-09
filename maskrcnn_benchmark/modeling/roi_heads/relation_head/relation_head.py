@@ -8,7 +8,7 @@ from .roi_relation_predictors import make_roi_relation_predictor
 from .inference import make_roi_relation_post_processor
 from .loss import make_roi_relation_loss_evaluator
 from .sampling import make_roi_relation_samp_processor
-from maskrcnn_benchmark.modeling.cnlr_head.cross_boxes import GenerateCrossBoxes
+from maskrcnn_benchmark.modeling.cnlr_head.cross_boxes import generate_cross_box
 
 
 class ROIRelationHead(torch.nn.Module):
@@ -38,8 +38,6 @@ class ROIRelationHead(torch.nn.Module):
         # parameters
         self.use_union_box = self.cfg.MODEL.ROI_RELATION_HEAD.PREDICT_USE_VISION
 
-        self.dim = 512
-        self.generate_cross_box = GenerateCrossBoxes(self.dim)
 
     def forward(self, features, proposals, targets=None, logger=None):
         """
@@ -69,7 +67,7 @@ class ROIRelationHead(torch.nn.Module):
             rel_pair_idxs = self.samp_processor.prepare_test_pairs(features[0].device, proposals)
 
         # use box_head to extract features that will be fed to the later predictor processing
-        cross_boxes_head, cross_boxes_tail, cross_matrix, cross_id_matrix, full_id_matrix = self.generate_cross_box(
+        cross_boxes_head, cross_boxes_tail, cross_matrix, cross_id_matrix, full_id_matrix = generate_cross_box(
             proposals, rel_pair_idxs)
 
         roi_features, cross_head_features, cross_tail_features = self.box_feature_extractor(features, proposals,

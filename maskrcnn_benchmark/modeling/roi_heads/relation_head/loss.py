@@ -74,20 +74,24 @@ class RelationLossComputation(object):
 
         fg_labels = cat([proposal.get_field("labels") for proposal in proposals], dim=0)
         rel_labels1 = cat(rel_labels, dim=0)
+        # LRA
 
         max_id = torch.argmax(original_ctx, dim=-1)
         hundred_min = -100 * torch.ones(original_ctx.shape[0], 1).to(torch.device("cuda"))
         original_ctx_dists_50 = original_ctx[:, 1:]
         original_ctx_dists_51 = torch.cat((hundred_min, original_ctx_dists_50), dim=-1)
         prediction_score, prediction_label_id = torch.sort(original_ctx_dists_51, dim=-1, descending=True)
+        # y_a, y_b
         label_a = prediction_label_id[:, 0]
         label_b = prediction_label_id[:, 1]
+        # LRA
         correlation_score = prediction_score[:, 1] / prediction_score[:, 0]
 
         cross_gt_label = []
         for label, id in zip(rel_labels, cross_id_matrix):
             label = label[id]
             cross_gt_label.append(label)
+
         rank_id = torch.tensor([0, 8, 44, 34, 28, 30, 17, 16, 10, 32, 31, 22, 40, 26, 23, 45, 20, 36,
                                 49, 18, 2, 9, 3, 15, 27, 35, 48, 39, 41, 6, 4, 1, 47, 19, 33, 37,
                                 43, 25, 21, 42, 12, 14, 38, 11, 46, 50, 24, 29, 5, 13, 7]).to(torch.device("cuda"))

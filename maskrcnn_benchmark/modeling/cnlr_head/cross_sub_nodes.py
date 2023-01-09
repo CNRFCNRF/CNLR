@@ -25,6 +25,7 @@ class CrossNodeGenerate(nn.Module):
         cross_head_boxes_embed = self.pos_embed(cross_head_boxes)
         cross_tail_boxes = encode_box(cross_tail_boxes, proposals)
         cross_tail_boxes_embed = self.pos_embed(cross_tail_boxes)
+        # cross sub_nodes
         cross_head_pre_rep = torch.cat((cross_head_feature, head_obj_embed, cross_head_boxes_embed), dim=-1)
         cross_tail_pre_rep = torch.cat((cross_tail_feature, tail_obj_embed, cross_tail_boxes_embed), dim=-1)
         return cross_head_pre_rep, cross_tail_pre_rep
