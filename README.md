@@ -217,29 +217,3 @@ The counterfactual inference is not only applicable to SGG. Actually, my collegu
 3. **Q:** AssertionError on "l_batch == 1" in model_motifs.py
 **A:** The original MOTIFS code only supports evaluation on 1 GPU. Since my reimplemented motifs is based on their code, I keep this assertion to make sure it won't cause any unexpected errors.
 
-## Citations
-
-If you find this project helps your research, please kindly consider citing our project or papers in your publications.
-
-```
-@misc{tang2020sggcode,
-title = {A Scene Graph Generation Codebase in PyTorch},
-author = {Tang, Kaihua},
-year = {2020},
-note = {\url{https://github.com/KaihuaTang/Scene-Graph-Benchmark.pytorch}},
-}
-
-@inproceedings{tang2018learning,
-  title={Learning to Compose Dynamic Tree Structures for Visual Contexts},
-  author={Tang, Kaihua and Zhang, Hanwang and Wu, Baoyuan and Luo, Wenhan and Liu, Wei},
-  booktitle= "Conference on Computer Vision and Pattern Recognition",
-  year={2019}
-}
-
-@inproceedings{tang2020unbiased,
-  title={Unbiased Scene Graph Generation from Biased Training},
-  author={Tang, Kaihua and Niu, Yulei and Huang, Jianqiang and Shi, Jiaxin and Zhang, Hanwang},
-  booktitle= "Conference on Computer Vision and Pattern Recognition",
-  year={2020}
-}
-```
